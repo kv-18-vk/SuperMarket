@@ -88,7 +88,7 @@ function Stock() {
                         <table className="delivery-table" id="present-table" aria-label="Present stock table">
                             <thead>
                                 <tr>
-                                <th>Product ID</th>
+                                <th>Product Name</th>
                                 <th>Quantity Present</th>
                                 <th>SP</th>
                                 <th>Discount(%)</th>
@@ -98,10 +98,10 @@ function Stock() {
                             <tbody>
                             {products.map((p,idx)=>(
                                 <tr key={idx}>
-                                    <td>{p.product_id}</td>
+                                    <td>{p.product_name}</td>
                                     <td>{p.quantity_present}</td>
                                     <td>{p.sp}</td>
-                                    <td>{p.discount ?? 0}</td>
+                                    <td>{p.discount_in_percent}</td>
                                     <td>{p.expiry_date ? p.expiry_date.toString().split('T')[0] : "N/A"}</td>
                                 </tr>
                             ))}
