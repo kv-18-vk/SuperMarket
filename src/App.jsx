@@ -19,9 +19,11 @@ import './profit.css';
 
 function Protect({ children }) {
 
-    const { authenticated } = useAuth();
-    
-  return authenticated ? children : <Navigate to="/" />;
+    const { authenticated,loading } = useAuth();
+    if(loading){
+        return <div>loading.....</div>
+    }
+    return authenticated ? children : <Navigate to="/" />;
 }
 
 

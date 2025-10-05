@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
     const [userName, setUserName] = useState("");
     const [userid, setuserid] =  useState(0);
     const [designation, setDesignation] = useState("");
+    const [loading , setloading] = useState(true);
 
     useEffect(() => {
         const storedAuth = localStorage.getItem('auth');
@@ -19,6 +20,7 @@ export function AuthProvider({ children }) {
             setUserName(auth_name);
             setDesignation(auth_role);
         }   
+        setloading(false);
     }, []);
 
   const login = (id,name, role) => {
@@ -39,7 +41,7 @@ export function AuthProvider({ children }) {
 
 
   return (
-    <AuthContext.Provider value={{ authenticated,userid, userName, designation, login, logout }}>
+    <AuthContext.Provider value={{ authenticated,userid, userName, designation,loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
