@@ -44,7 +44,7 @@
 .add-btn:hover { background: #1e40af; }
 
 
-.delivery-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+.delivery-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05);color:black; }
 .delivery-table th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e5e7eb; }
 .delivery-table th { background: #2563eb; color: white; }
 .delivery-table tr:hover { background-color: #f1f5f9; }
