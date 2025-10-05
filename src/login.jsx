@@ -41,6 +41,15 @@ function Login() {
 
     return (
         <div className="loginpage">
+            <div className='login-logo'>
+                <div className="login-icon">
+                        <i className="fas fa-cart-shopping"></i>
+                </div>
+                <div className="login-text">
+                    <h1>DataMart</h1>
+                    <p>Smart Management, Seamless Operations</p>
+                </div>
+            </div>
             <div className="login-container">
                 <h2>Employee Login</h2>
                 <div className="input-group">

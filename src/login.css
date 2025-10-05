@@ -4,7 +4,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+    gap:30px;
+    background: linear-gradient(135deg, #6095e9, #c2e9fb);
 }
 
 .login-container {
@@ -20,7 +21,18 @@
     gap: 20px;
     justify-content: center;
 }
+.login-logo{
+    width:300px;
+    padding:30px;
+}
 
+.login-icon i{
+    color: orange;
+    font-size: 5rem;
+}
+.login-text{
+    font-size: 15px;
+}
 .login-container h2 {
     color: #2a5d9f;
     margin-bottom: 0;
