@@ -48,7 +48,7 @@
 .delivery-table th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e5e7eb; }
 .delivery-table th { background: #2563eb; color: white; }
 .delivery-table tr:hover { background-color: #f1f5f9; }
-.delivery-table td .action-btn { background: none; border: none; cursor: pointer; margin: 0 5px; font-size: 1rem; }
+.delivery-table td .action-btn { background: none; border: none; cursor: pointer; margin: 0 5px; font-size: 1rem; color:black; }
 .edit { color: #2563eb; }
 .delete { color: #dc2626; }
 .hidden { display: none; }
