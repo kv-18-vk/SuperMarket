@@ -1,0 +1,11 @@
+.stockpage {
+    display:flex;
+    flex-direction: column;
+    height: 100vh;
+    width:100%;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-y: auto;
+    background-color: #f5f7fa;
+}

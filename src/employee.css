@@ -1,0 +1,135 @@
+.staffpage {
+    display:flex;
+    flex-direction: column;
+    height: 100vh;
+    width:100%;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-y: auto;
+    background-color: #f5f7fa;
+}
+.staff-container {
+    width: 800px;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 80px;
+}
+.staff-container::-webkit-scrollbar {
+    width: 8px;
+}
+.staff-table{
+    width: 100%;
+}
+.staff-header {
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.staff-header th {
+    background-color: #4CAF50;
+}
+.staff-list td{
+    background-color: #ffffff;
+}
+.staff-list tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+.staff-table th, .staff-table td {
+    border-radius: 5px;
+    padding: 12px;
+    text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.staff-buttons-bar {
+    display: flex;
+    gap: 40px;
+    margin-top: 50px;
+}
+.staff-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.staff-button:nth-child(1) {
+    background-color: #4CAF50;
+}
+.staff-button:nth-child(2) {
+    background-color: #2196F3;
+}
+.staff-button:nth-child(3) {
+    background-color: #f44336;
+}
+
+.add-employee-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+.add-employee-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.add-employee-inputs {
+    display: flex;
+    gap: 20px;
+}
+.add-employee-inputs input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+}
+
+.delete-employee-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+.delete-employee-inputs {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.delete-employee-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+}
+.delete-employee-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.add-employee-inputs input:focus, .delete-employee-form input:focus, .edit-employee-form input:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+.add-employee-form.hide, .edit-employee-form.hide, .delete-employee-form.hide {
+    display: none;
+}
