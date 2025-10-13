@@ -128,7 +128,7 @@ function Stock() {
                             <tbody>
                             {expired.map((p,idx)=>(
                                 <tr key={idx}>
-                                    <td>{p.date}</td>
+                                    <td>{p.date_expired.toString().split('T')[0]}</td>
                                     <td>{p.product_id}</td>
                                     <td>{p.quantity_expired}</td>
                                     <td>{p.loss}</td>

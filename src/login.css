@@ -2,10 +2,13 @@
     width: 100%;
     height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     gap:30px;
-    background: linear-gradient(135deg, #6095e9, #c2e9fb);
+    background: url("assets/1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
 }
 
 .login-container {
@@ -19,20 +22,10 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    margin-right: 50px;
     justify-content: center;
 }
-.login-logo{
-    width:300px;
-    padding:30px;
-}
 
-.login-icon i{
-    color: orange;
-    font-size: 5rem;
-}
-.login-text{
-    font-size: 15px;
-}
 .login-container h2 {
     color: #2a5d9f;
     margin-bottom: 0;
