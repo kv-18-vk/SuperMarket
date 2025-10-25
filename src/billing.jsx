@@ -127,12 +127,14 @@ function Billing() {
                         <div>
                             <table  className="bill-table">
                                 <thead className="bill-table-header">
-                                    <th>S.no</th>
-                                    <th>Product Name</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Discount_%</th>
-                                    <th>Final_Price</th>
+                                    <tr>
+                                        <th>S.no</th>
+                                        <th>Product Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Discount_%</th>
+                                        <th>Final_Price</th>
+                                    </tr>
                                 </thead>
                                 <tbody id="bill-tableBody">
                                     {billeditems.map((item, index) => (
