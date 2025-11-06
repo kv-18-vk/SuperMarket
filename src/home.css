@@ -90,7 +90,7 @@
     position: absolute;
     top: 60px;
     right: 0;
-    left:15%;
+    left:10%;
     background: var(--color-white);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
