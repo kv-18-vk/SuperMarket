@@ -3,7 +3,7 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, PieChart, Pie, Cell,ResponsiveContainer
 } from "recharts";
 import { useAuth } from './auth';
-import bg from "./assets/report.png";
+import bg from "./assets/PROFITS.png";
 
 const Report = () => {
 
