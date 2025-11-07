@@ -169,9 +169,9 @@ const Report = () => {
 
   return (
     <div className="profit-page">
-        <div className="first-view">
-          <img src={bg} alt="Background" className="bg-image" />
-          <div>
+      <div className="first-view">
+        <img src={bg} alt="Background" className="bg-image" />
+        <div>
             <div className="heading-space">
               <header className="home-header report">
                 <div className="home-nav">

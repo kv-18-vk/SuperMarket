@@ -7,6 +7,10 @@ function Billing() {
     const [billItems, setBillItems] = useState([]);
     const [billeditems, setbilleditems] = useState([]);
     const [pagestate , setpagestate] = useState("billing");
+    const [customerDetails, setCustomerDetails] = useState({
+        name: "",
+        phone: ""
+    });
 
     function makebill(){
 
@@ -50,6 +54,10 @@ function Billing() {
         setBillItems([]);
         setbilleditems([]);
         setpagestate("billing");
+        setCustomerDetails({
+            name: "",
+            phone: ""
+        });
     }
 
     function savebill(){
@@ -66,7 +74,134 @@ function Billing() {
             .catch(err => console.error("Payment error:", err));
     }
 
+    function handleCustomerDetailsChange(e) {
+        const { name, value } = e.target;
+        setCustomerDetails(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
 
+    function printBill() {
+        const printContent = document.getElementById("printable-bill");
+        const originalContent = document.body.innerHTML;
+        
+        document.body.innerHTML = `
+            <html>
+                <head>
+                    <title>Bill Print</title>
+                    <style>
+                        @media print {
+                            @page {
+                                size: A4;
+                                margin: 0.5in;
+                            }
+                        }
+                        body { 
+                            font-family: 'Inter', sans-serif;
+                            padding: 10px;
+                            max-width: 8.5in;
+                            margin: 0 auto;
+                            font-size: 12px;
+                            background-color: white !important;
+                            color: black !important;
+                        }
+                        .bill-header {
+                            text-align: center;
+                            border-bottom: 2px solid #22c58b;
+                            padding-bottom: 8px;
+                            margin-bottom: 15px;
+                            background-color: white !important;
+                        }
+                        .bill-header h2 {
+                            margin: 5px 0;
+                            font-size: 18px;
+                            color: black !important;
+                        }
+                        .bill-header p {
+                            margin: 2px 0;
+                            font-size: 12px;
+                            color: black !important;
+                        }
+                        .customer-details {
+                            margin-bottom: 15px;
+                            font-size: 12px;
+                            background-color: white !important;
+                        }
+                        .customer-details h3 {
+                            margin: 5px 0;
+                            font-size: 14px;
+                            color: black !important;
+                        }
+                        .customer-details p {
+                            margin: 3px 0;
+                            font-size: 11px;
+                            color: black !important;
+                        }
+                        .bill-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin: 10px 0;
+                            font-size: 11px;
+                            background-color: white !important;
+                        }
+                        .bill-table-header {
+                            background-color: #22c58b !important;
+                            color: white !important;
+                        }
+                        .bill-table-header th {
+                            padding: 6px 8px;
+                            text-align: left;
+                            font-size: 11px;
+                        }
+                        .bill-table-row td {
+                            padding: 6px 8px;
+                            border-bottom: 1px solid #e0e0e0;
+                            background-color: white !important;
+                            color: black !important;
+                        }
+                        .total-section {
+                            text-align: right;
+                            margin-top: 10px;
+                            font-size: 14px;
+                            font-weight: bold;
+                            background-color: white !important;
+                        }
+                        .total-section h3 {
+                            color: black !important;
+                        }
+                        .print-footer {
+                            text-align: center;
+                            margin-top: 15px;
+                            padding-top: 8px;
+                            border-top: 1px solid #ccc;
+                            font-size: 10px;
+                            color: #666 !important;
+                            background-color: white !important;
+                        }
+                        * {
+                            -webkit-print-color-adjust: exact !important;
+                            color-adjust: exact !important;
+                        }
+                        /* Force background colors to print */
+                        .bill-table-header,
+                        .bill-table-header th {
+                            background-color: #22c58b !important;
+                            color: white !important;
+                            -webkit-print-color-adjust: exact;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${printContent.innerHTML}
+                </body>
+            </html>
+        `;
+        
+        window.print();
+        document.body.innerHTML = originalContent;
+        window.location.reload();
+    }
 
     return (
         <div className="billingpage">
@@ -125,39 +260,84 @@ function Billing() {
                     }
                     {pagestate==="makebill" &&
                         <div>
-                            <table  className="bill-table">
-                                <thead className="bill-table-header">
-                                    <tr>
-                                        <th>S.no</th>
-                                        <th>Product Name</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Discount_%</th>
-                                        <th>Final_Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bill-tableBody">
-                                    {billeditems.map((item, index) => (
-                                        <tr className="bill-table-row" key={index}>
-                                            <td>{index + 1}</td> 
-                                            <td>{item.product_name}</td>
-                                            <td>{item.quantity}</td>
-                                            <td>{item.price}</td>
-                                            <td>{item.discount}</td>
-                                            <td>{item.final_price}</td>
+                            <div id="printable-bill" style={{ padding: "15px", borderRadius: "8px"}}>
+                                <div className="bill-header">
+                                    <h2>SuperMarket Bill</h2>
+                                    <p>Date: {new Date().toLocaleDateString()}</p>
+                                </div>
+                                
+                                {customerDetails.name && (
+                                    <div className="customer-details">
+                                        <h3>Customer Details:</h3>
+                                        <p><strong>Name:</strong> {customerDetails.name}</p>
+                                        {customerDetails.phone && <p><strong>Phone:</strong> {customerDetails.phone}</p>}
+                                    </div>
+                                )}
+                                
+                                <table className="bill-table">
+                                    <thead className="bill-table-header">
+                                        <tr>
+                                            <th>S.no</th>
+                                            <th>Product Name</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
+                                            <th>Disc%</th>
+                                            <th>Final</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody id="bill-tableBody">
+                                        {billeditems.map((item, index) => (
+                                            <tr className="bill-table-row" key={index}>
+                                                <td>{index + 1}</td> 
+                                                <td>{item.product_name}</td>
+                                                <td>{item.quantity}</td>
+                                                <td>{item.price}</td>
+                                                <td>{item.discount}</td>
+                                                <td>{item.final_price}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                <div className="total-section">
+                                    <h3>Total Amount: ₹ {billeditems.reduce((acc, item) => acc + item.final_price, 0)}</h3>
+                                </div>
+                                <div className="print-footer">
+                                    <p>Thank you for shopping with us!</p>
+                                    <p>Visit again soon.</p>
+                                </div>
+                            </div>
+                            
+                            <div className="customer-details-input" style={{marginTop: "20px", width: "65%"}}>
+                                <h3>Customer Details:</h3>
+                                <div style={{display: "flex", gap: "15px", marginBottom: "15px", flexWrap: "wrap"}}>
+                                    <input 
+                                        type="text" 
+                                        name="name" 
+                                        placeholder="Customer Name" 
+                                        value={customerDetails.name}
+                                        onChange={handleCustomerDetailsChange}
+                                        style={{padding: "10px", borderRadius: "8px", border: "1px solid #ccc", flex: "1", minWidth: "150px"}}
+                                    />
+                                    <input 
+                                        type="text" 
+                                        name="phone" 
+                                        placeholder="Phone Number" 
+                                        value={customerDetails.phone}
+                                        onChange={handleCustomerDetailsChange}
+                                        style={{padding: "10px", borderRadius: "8px", border: "1px solid #ccc", flex: "1", minWidth: "150px"}}
+                                    />
+                                </div>
+                            </div>
+                            
                             <div className="billing-details">
                                 <h3>Total Amount: ₹ {billeditems.reduce((acc, item) => acc + item.final_price, 0)}</h3>
                                 <div className="billing-options">
-                                    <button className="bill-btn new" onClick={()=>savebill()}>Payment done</button>
+                                    <button className="bill-btn new" onClick={()=> {savebill(); printBill();}}>Payment done & Print Bill</button>
                                     <button className="bill-btn clear" onClick={()=>createNewBill()}>Clear and make New Bill</button>
+                                    <button className="bill-btn" onClick={printBill} style={{backgroundColor: "#22c58b"}}>Print Bill Only</button>
                                 </div>
                             </div>
                         </div>
-
                     }
                 </div>
             </div>

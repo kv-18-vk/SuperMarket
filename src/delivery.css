@@ -1,122 +1,71 @@
 .deliverypage {
-    display:flex;
-    flex-direction: column;
     height: 100vh;
     width:100%;
-    align-items: center;
-    justify-content: flex-start;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow-y: auto;
-    background-color: #f5f7fa;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    background: rgb(248, 254, 255);
+}
+.heading-space.deliv{
+    margin-left: 300px;
 }
 
-.header {
-    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-    color: white;
-    padding: 15px 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width:100%;
-}
-
-.header-content {
-    display: flex;
-    justify-content:space-evenly;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.logo-icon {
-    font-size: 2.5rem;
-    color: #ffd166;
-}
-
-.logo-text h1 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.logo-text p {
-    font-size: 0.9rem;
-    opacity: 0.9;
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 25px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-}
-
-nav a:hover {
-    color: #ffd166;
-}
-
-.user-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.user-actions button {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-#user_name{
-    margin-left:10px;
-}
-.user-actions button:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
 
 .main-content { 
     display: flex; 
+    flex-direction: column; /* Changed from row to column */
     flex: 1;
-    justify-content: space-between;
     width:100%;
 }
 
-
-.sidebar {
-    width: 15%; 
-    background: white; 
-    padding-top: 30px; display: flex; 
-    flex-direction: column; 
-    border-right: 1px solid #e5e7eb; 
+/* Top Navigation Styles */
+.top-navigation {
+    width:100%;
+    background: rgb(248, 254, 255);
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 20px;
 }
-.sidebar button { padding: 15px 20px; text-decoration: none; color: #2563eb; font-weight: 500;font-size: 15px; display: block; transition: all 0.3s ease;border:none;background-color: transparent; }
-.sidebar button:hover { background: #f1f5f9; color: #1e40af; }
-.sidebar button.active { background: #e0e7ff; color: #1e40af; font-weight: 600;border-left:4px solid #1e40af; }
+
+.top-navigation button {
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #16a34a;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    border: none;
+    background-color: transparent;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+}
+
+.top-navigation button:hover {
+    background: #f1f5f9;
+    color: #14532d;
+}
+
+.top-navigation button.active {
+    background: #f0fdf4;
+    color: #14532d;
+    font-weight: 600;
+    border-bottom: 3px solid #14532d;
+}
+
 
 
 .content-area { 
     flex: 1; 
-    padding: 25px;
-    width:85%;
+    padding: 0 25px 25px 25px; /* Adjusted padding */
+    width: 100%;
 }
-.dashboard-header h2 { font-size: 1.8rem; color: #1e40af; margin-bottom: 10px; }
+.dashboard-header{display:flex; justify-content: space-between; align-items: center; width:95%;}
+.dashboard-header h2 { font-size: 1.8rem; color: #14532d; margin-bottom: 10px; }
 .dashboard-header p { font-size: 0.8rem; color: #64748b; margin-bottom: 20px; }
 
 
-.add-btn { background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 15px; }
-.add-btn:hover { background: #1e40af; }
+.add-btn { background: #16a34a; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500; margin-bottom: 15px; }
+.add-btn:hover { background: #14532d; }
 
 
 .delivery-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05);color:black; }
@@ -143,5 +92,101 @@ nav a:hover {
 .modal-content h3 { margin-bottom: 15px; color: #1e40af; }
 .modal-content input { width: 95%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
 .modal-content button { margin-top: 10px; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; }
-.save-btn { background: #2563eb; color: white; }
+.save-btn { background: #16a34a; color: white; }
 .cancel-btn { background: #dc2626; color: white; margin-left: 10px; }
+
+/* Supplier Cards Styles */
+.suppliers-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Changed to 3 columns */
+  gap: 15px; /* Reduced gap */
+  margin-top: 20px;
+}
+
+.supplier-card {
+  background: white; /* Changed to white background */
+  border: 1px solid #bbf7d0; /* Green border */
+  border-radius: 8px;
+  padding: 15px; /* Reduced padding */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.supplier-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-color: #4ade80; /* Brighter green border on hover */
+}
+
+.supplier-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px; /* Reduced margin */
+  font-size: 1.2rem; /* Slightly smaller font */
+  border-bottom: 2px solid #bbf7d0;
+  padding-bottom: 6px; /* Reduced padding */
+}
+
+.supplier-card p {
+  margin: 6px 0; /* Reduced margin */
+  font-size: 0.9rem; /* Slightly smaller font */
+}
+
+.supplier-card strong {
+  font-weight: 600;
+}
+
+.supplier-card p.category {
+  color: #16a34a; /* Green color for category text */
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.phone-icon {
+  width: 14px; /* Slightly smaller icon */
+  height: 14px; /* Slightly smaller icon */
+  color: #000; /* Black color for the phone icon */
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px; /* Reduced margin */
+}
+
+/* Delivery Cards Styles */
+.deliveries-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Changed to 4 columns */
+  gap: 15px; /* Reduced gap */
+  margin-top: 20px;
+}
+
+.delivery-card {
+  background: white; /* White background */
+  border: 1px solid #bbf7d0; /* Green border */
+  border-radius: 8px;
+  padding: 15px; /* Reduced padding */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.delivery-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-color: #4ade80; /* Brighter green border on hover */
+}
+
+.delivery-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px; /* Reduced margin */
+  font-size: 1.2rem; /* Slightly smaller font */
+  border-bottom: 2px solid #bbf7d0;
+  padding-bottom: 6px; /* Reduced padding */
+}
+
+.delivery-card p {
+  margin: 6px 0; /* Reduced margin */
+  font-size: 0.9rem; /* Slightly smaller font */
+}
+
+.delivery-card span {
+    color: grey;
+  font-weight: 500;
+}

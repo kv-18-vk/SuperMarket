@@ -1,5 +1,6 @@
 import { useAuth } from "./auth";
 import { useState,useEffect } from "react";
+import bg from "./assets/DELIVERY.png"
 
 function Delivery() {
   const { logout, userid,userName } = useAuth();
@@ -83,126 +84,132 @@ function Delivery() {
     closeModal();
   };
 
+  const [menuOpen, setMenuOpen] = useState(false);
+      function toggleUserMenu(){
+          setMenuOpen(!menuOpen);
+      }
+
   return (
     <div className="deliverypage">
-      <div className="header">
-        <div className="header-content">
-          <div className="logo">
-            <div className="logo-icon">
-              <i className="fas fa-cart-shopping"></i>
-            </div>
-            <div className="logo-text">
-              <h1>DataMart</h1>
-              <p>Smart Management, Seamless Operations</p>
+      <div className="first-view">
+        <img src={bg} alt="Background" className="bg-image" />
+        <div>
+          <div className="heading-space deliv">
+            <h1>Delivery</h1>
+            <div className="home-header report">
+              <div className="home-nav">
+                  <div className="home-nav-item">
+                      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                      </svg>
+                      Delivery Page
+                  </div>
+
+                  <div className="home-user-menu">
+                      <div className="user-avatar-wrapper" onClick={()=>toggleUserMenu()}>
+                          <div className="user-avatar">
+                              <svg viewBox="0 0 24 24" fill="none">
+                                  <circle cx="12" cy="8" r="4" fill="#5E4030"/>
+                                  <path d="M4 20c0-4 3.5-7 8-7s8 3 8 7" fill="#5E4030"/>
+                                  <circle cx="12" cy="8" r="3.5" fill="#8B6F47"/>
+                                  <ellipse cx="10" cy="7.5" rx="0.8" ry="1" fill="#2D1810"/>
+                                  <ellipse cx="14" cy="7.5" rx="0.8" ry="1" fill="#2D1810"/>
+                                  <path d="M10.5 9c.5.3 1 .5 1.5.5s1-.2 1.5-.5" stroke="#8B6F47" strokeWidth="0.5" strokeLinecap="round"/>
+                              </svg>
+                          </div>
+                          <span className="admin-label">{userName}</span>
+                      </div>
+                      <div className={!menuOpen ? "home-user-info" : "home-user-info active"} id="userMenu">
+                          <div className="home-menu-item" onClick={()=>logout()}>
+                              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                              </svg>
+                              Logout
+                          </div>
+                      </div>
+                  </div>
+              </div>
             </div>
           </div>
-
-          <nav>
-            <ul>
-              <li><a href="#"><i className="fas fa-home"></i> Home</a></li>
-              <li><a href="#"><i className="fas fa-chart-line"></i> Reports</a></li>
-              <li><a href="#"><i className="fas fa-cog"></i> Settings</a></li>
-              <li><a href="#"><i className="fas fa-question-circle"></i> Help</a></li>
-            </ul>
-          </nav>
-
-          <div className="user-actions">
-            <button><i className="fas fa-bell"></i></button>
-            <button onClick={() => logout()}>
-              <i className="fas fa-user"></i>
-              <span id="user_name">{userName}</span>
+          <div className="top-navigation">
+            <button
+              className={activeTab === "suppliers" ? "active" : ""}
+              onClick={() => setActiveTab("suppliers")}
+            >
+              <i className="fas fa-truck"></i> Suppliers Information
+            </button>
+            <button
+              className={activeTab === "deliveries" ? "active" : ""}
+              onClick={() => setActiveTab("deliveries")}
+            >
+              <i className="fas fa-history"></i> Delivery Entry
             </button>
           </div>
-        </div>
-      </div>
-
-      <div className="main-content">
-        <div className="sidebar">
-          <button
-            className={activeTab === "suppliers" ? "active" : ""}
-            onClick={() => setActiveTab("suppliers")}
-          >
-            <i className="fas fa-truck"></i> Suppliers Information
-          </button>
-          <button
-            className={activeTab === "deliveries" ? "active" : ""}
-            onClick={() => setActiveTab("deliveries")}
-          >
-            <i className="fas fa-history"></i> Delivery Entry
-          </button>
-        </div>
-
-        <div className="content-area">
-
           {activeTab === "suppliers" && (
-            <div>
-              <div className="dashboard-header">
+            <div className="dashboard-header">
+              <div>
                 <h2>Suppliers Information</h2>
                 <p>Manage and view supplier details</p>
               </div>
               <button className="add-btn" onClick={() => openModal("supplier")}>
                 + Add Supplier
               </button>
-              <table className="delivery-table">
-                <thead>
-                  <tr>
-                    <th>Supplier ID</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Contact No.</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {suppliers.map((s, idx) => (
-                    <tr key={idx}>
-                      <td>{s.supplier_id}</td>
-                      <td>{s.s_name}</td>
-                      <td>{s.category}</td>
-                      <td>{s.contact_no}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
           )}
-
           {activeTab === "deliveries" && (
-            <div>
-              <div className="dashboard-header">
+            <div className="dashboard-header">
+              <div>
                 <h2>Delivery History</h2>
                 <p>Track all daily delivery transactions</p>
               </div>
               <button className="add-btn" onClick={() => openModal("delivery")}>
                 + Add Delivery
               </button>
-              <table className="delivery-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Supplier ID</th>
-                    <th>Employee ID</th>
-                    <th>Product ID</th>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>CP</th>
-                    <th>Expenses</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {deliveries.map((d, idx) => (
-                    <tr key={idx}>
-                      <td>{d.date.toString().split('T')[0]}</td>
-                      <td>{d.supplier_id}</td>
-                      <td>{d.employee_id}</td>
-                      <td>{d.product_id}</td>
-                      <td>{d.product_name}</td>
-                      <td>{d.quantity}</td>
-                      <td>{d.cp}</td>
-                      <td>{d.expenses}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="main-content">
+
+        <div className="content-area">
+
+          {activeTab === "suppliers" && (
+            <div>
+              <div className="suppliers-container">
+                {suppliers.map((s, idx) => (
+                  <div className="supplier-card" key={idx}>
+                    <h3>{s.s_name}</h3>
+                    <p><strong>ID:</strong> {s.supplier_id}</p>
+                    <p>
+                      <svg className="phone-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                      {s.contact_no}
+                    </p>
+                    <p className="category">{s.category}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeTab === "deliveries" && (
+            <div>
+              <div className="deliveries-container">
+                {deliveries.map((d, idx) => (
+                  <div className="delivery-card" key={idx}>
+                    <h3>Product ID: {d.product_id}</h3>
+                    <p><span>Date:</span> {d.date.toString().split('T')[0]}</p>
+                    <p><span>Supplier ID:</span> {d.supplier_id}</p>
+                    <p><span>Employee ID:</span> {d.employee_id}</p>
+                    <p><span>Product Name:</span> {d.product_name}</p>
+                    <p><span>Quantity:</span> {d.quantity}</p>
+                    <p><span>CP:</span> {d.cp}</p>
+                    <p><span>Expenses:</span> {d.expenses}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
