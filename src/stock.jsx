@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 import { useAuth } from "./auth";
-import bg from "./assets/report.png"
+import bg from "./assets/STOCK.png"
 
 function Stock() {
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./auth";
-import reportImage from "./assets/employee.jpg"; // Using report.png for employee page
+import reportImage from "./assets/EMPLOYEE.png"; // Using report.png for employee page
 
 function Staff() {
     const { userName, logout } = useAuth();
