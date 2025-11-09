@@ -31,6 +31,29 @@ function Stock() {
         setMenuOpen(!menuOpen);
     }
 
+    // Helper function to determine the status color
+    function getStatusColor(product) {
+        // Check if expiry date is near (within 5 days)
+        if (product.expiry_date) {
+            const today = new Date();
+            const expiryDate = new Date(product.expiry_date);
+            const timeDiff = expiryDate.getTime() - today.getTime();
+            const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            
+            if (daysDiff <= 5 && daysDiff >= 0) {
+                return "red"; // Expiry date is near
+            }
+        }
+        
+        // Check if quantity is less than 10
+        if (product.quantity_present < 10) {
+            return "yellow"; // Low quantity
+        }
+        
+        // Otherwise, it's good
+        return "green"; // Good quantity and time for expiry
+    }
+
     return (
         <div className="stockpage">
             <div className="first-view">
@@ -113,7 +136,12 @@ function Stock() {
                             <div className="stocks-container">
                                 {products.map((p, idx) => (
                                     <div className="stock-card" key={idx}>
-                                        <h3>Product ID: {p.product_id}</h3>
+                                        <div className="card-header">
+                                            <h3>Product ID: {p.product_id}</h3>
+                                            <div 
+                                                className={`status-indicator status-${getStatusColor(p)}`}
+                                            ></div>
+                                        </div>
                                         <p><strong>Product Name:</strong> {p.product_name}</p>
                                         <p><strong>Quantity:</strong> {p.quantity_present}</p>
                                         <p><strong>SP:</strong> {p.sp}</p>
@@ -129,7 +157,12 @@ function Stock() {
                             <div className="stocks-container">
                                 {expired.map((p, idx) => (
                                     <div className="stock-card" key={idx}>
-                                        <h3>Product ID: {p.product_id}</h3>
+                                        <div className="card-header">
+                                            <h3>Product ID: {p.product_id}</h3>
+                                            <div 
+                                                className="status-indicator status-static-red"
+                                            ></div>
+                                        </div>
                                         <p><strong>Date Expired:</strong> {p.date_expired.toString().split('T')[0]}</p>
                                         <p><strong>Quantity Expired:</strong> {p.quantity_expired}</p>
                                         <p><strong>Loss:</strong> <span className="exp-loss-red">{p.loss}</span></p>

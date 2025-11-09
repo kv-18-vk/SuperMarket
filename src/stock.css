@@ -56,6 +56,7 @@
     flex: 1; 
     padding: 0 25px 25px 25px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .dashboard-header{
@@ -83,6 +84,8 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     margin-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .stock-card {
@@ -92,6 +95,9 @@
     padding: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    box-sizing: border-box;
+    min-width: 0;
 }
 
 .stock-card:hover {
@@ -116,6 +122,110 @@
 .stock-card strong {
     font-weight: 600;
 }
+
 .exp-loss-red{
     color: red;
+}
+
+/* Status indicator colors */
+.status-red {
+    background-color: #ef4444 !important; /* red-500 */
+}
+
+.status-yellow {
+    background-color: #eab308 !important; /* yellow-500 */
+}
+
+.status-green {
+    background-color: #22c55e !important; /* green-500 */
+}
+
+.status-static-red {
+    background-color: #ef4444 !important; /* red-500 */
+}
+
+/* Card header with status indicator */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #bbf7d0;
+    padding-bottom: 6px;
+    flex-grow: 1;
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+/* Enhanced blinking animation for warning indicators */
+@keyframes blink {
+    0% { 
+        opacity: 1; 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8);
+    }
+    25% { 
+        opacity: 0.7; 
+        transform: scale(1.1);
+    }
+    50% { 
+        opacity: 0.4; 
+        transform: scale(1.2);
+        box-shadow: 0 0 0 5px rgba(239, 68, 68, 0.3);
+    }
+    75% { 
+        opacity: 0.7; 
+        transform: scale(1.1);
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8);
+    }
+}
+
+@keyframes blink-yellow {
+    0% { 
+        opacity: 1; 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.8);
+    }
+    25% { 
+        opacity: 0.7; 
+        transform: scale(1.1);
+    }
+    50% { 
+        opacity: 0.4; 
+        transform: scale(1.2);
+        box-shadow: 0 0 0 5px rgba(234, 179, 8, 0.3);
+    }
+    75% { 
+        opacity: 0.7; 
+        transform: scale(1.1);
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.8);
+    }
+}
+
+.status-red {
+    animation: blink 1.2s infinite;
+}
+
+.status-yellow {
+    animation: blink-yellow 1.2s infinite;
 }
