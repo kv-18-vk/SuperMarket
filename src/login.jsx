@@ -42,14 +42,13 @@ function Login() {
     return (
         <div className="loginpage">
             <div className="login-container">
-                <h2>Employee Login</h2>
+                <h2>HELLO !</h2>
+                <h3>Login to track, manage and deliver with presicion</h3>
                 <div className="input-group">
-                    <label>Employee_ID</label>
-                    <input type="text" id="employeeId" placeholder="Enter your Employee_ID" required/>
+                    <input type="text" id="employeeId" placeholder="Employee_ID" required/>
                 </div>
                 <div className="input-group">
-                    <label>Password</label>
-                    <input type="password" id="password" placeholder="Enter your Password" required/>
+                    <input type="password" id="password" placeholder="Password" required/>
                 </div>
                 <button type="submit" className="login-btn" onClick={()=>{submit()}}>Login</button>
             </div>

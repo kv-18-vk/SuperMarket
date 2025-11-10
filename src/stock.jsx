@@ -31,9 +31,9 @@ function Stock() {
         setMenuOpen(!menuOpen);
     }
 
-    // Helper function to determine the status color
+    
     function getStatusColor(product) {
-        // Check if expiry date is near (within 5 days)
+        
         if (product.expiry_date) {
             const today = new Date();
             const expiryDate = new Date(product.expiry_date);
@@ -41,17 +41,15 @@ function Stock() {
             const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
             
             if (daysDiff <= 5 && daysDiff >= 0) {
-                return "red"; // Expiry date is near
+                return "red"; 
             }
         }
         
-        // Check if quantity is less than 10
         if (product.quantity_present < 10) {
-            return "yellow"; // Low quantity
+            return "yellow"; 
         }
         
-        // Otherwise, it's good
-        return "green"; // Good quantity and time for expiry
+        return "green"; 
     }
 
     return (
@@ -65,7 +63,7 @@ function Stock() {
                             <div className="home-nav">
                                 <div className="home-nav-item">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                                     </svg>
                                     Stock Page
                                 </div>

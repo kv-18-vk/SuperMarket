@@ -4,6 +4,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow-y: hidden;
     background: url('assets/home.svg') no-repeat top left;
+    background-size: cover;
     overflow-x: hidden;
 }
 

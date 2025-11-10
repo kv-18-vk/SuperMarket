@@ -1,9 +1,14 @@
 import { useEffect,useState } from "react";
 import trashicon from "./assets/image2.svg";
+import { useAuth } from "./auth";
 
 
 function Billing() {
-    
+    const { logout, userid,userName } = useAuth();
+    const [menuOpen, setMenuOpen] = useState(false);
+      function toggleUserMenu(){
+          setMenuOpen(!menuOpen);
+      }
     const [billItems, setBillItems] = useState([]);
     const [billeditems, setbilleditems] = useState([]);
     const [pagestate , setpagestate] = useState("billing");
@@ -186,7 +191,7 @@ function Billing() {
                         /* Force background colors to print */
                         .bill-table-header,
                         .bill-table-header th {
-                            background-color: #22c58b !important;
+                            background-color: #22c55b !important;
                             color: white !important;
                             -webkit-print-color-adjust: exact;
                         }
@@ -207,23 +212,42 @@ function Billing() {
         <div className="billingpage">
             <div className="container">
                 <div className="main">
-                    <div className="header-billing">
-                        <div className="header-left">
-                            <h3>🧾 BILLING PAGE</h3>
-                        </div>
-                        <div className="admin-section">
-                            <div className="admin-avatar"></div>
-                            <div className="admin-name" id="adminName">Admin ▼</div>
-                            <div className="dropdown" id="dropdownMenu">
-                                <div className="dropdown-item">👤 Profile</div>
-                                <div className="dropdown-item">🔔 Notifications</div>
-                                <div className="dropdown-item">⚙️ Settings</div>
-                                <div className="dropdown-item">❓ Help</div>
-                                <div className="dropdown-item logout">🚪 Logout</div>
+                    <div className="heading-space-between">
+                        <h1>Billing</h1>
+                        <div className="header-billing">
+                            <div className="header-left">
+                                <div className="home-nav-item">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"></path>
+                                    </svg>
+                                    BILLING PAGE
+                                </div>
+                            </div>
+                            <div className="home-user-menu">
+                                <div className="user-avatar-wrapper" onClick={()=>toggleUserMenu()}>
+                                    <div className="user-avatar">
+                                        <svg viewBox="0 0 24 24" fill="none">
+                                            <circle cx="12" cy="8" r="4" fill="#5E4030"/>
+                                            <path d="M4 20c0-4 3.5-7 8-7s8 3 8 7" fill="#5E4030"/>
+                                            <circle cx="12" cy="8" r="3.5" fill="#8B6F47"/>
+                                            <ellipse cx="10" cy="7.5" rx="0.8" ry="1" fill="#2D1810"/>
+                                            <ellipse cx="14" cy="7.5" rx="0.8" ry="1" fill="#2D1810"/>
+                                            <path d="M10.5 9c.5.3 1 .5 1.5.5s1-.2 1.5-.5" stroke="#8B6F47" strokeWidth="0.5" strokeLinecap="round"/>
+                                        </svg>
+                                    </div>
+                                    <span className="admin-label">{userName}</span>
+                                </div>
+                                <div className={!menuOpen ? "home-user-info" : "home-user-info active"} id="userMenu">
+                                    <div className="home-menu-item" onClick={()=>logout()}>
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                        </svg>
+                                        Logout
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                     {pagestate==="billing" &&
                         <div>
                             <div className="table">
