@@ -477,7 +477,7 @@ const Report = () => {
                     nameKey="category"
                     cx="50%"
                     cy="50%"
-                    outerRadius={90}
+                    outerRadius={150}
                     fill="#8884d8"
                     label={({ name, percent }) => `${name} ${(percent * 100).toFixed(1)}%`}
                   >

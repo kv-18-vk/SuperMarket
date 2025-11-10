@@ -5,7 +5,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
-    background: rgb(248, 254, 255);
+    background: rgb(252, 255, 254);
 }
 
 .home-header.report{
@@ -140,7 +140,7 @@
   text-align: center;
 }
 .chart-card.profit{
-  background-color: rgb(240, 252, 240);
+  background-color: rgb(247, 255, 242);
 }
 .chart-card.loss{
   background-color: rgb(252, 246, 246);
