@@ -92,13 +92,9 @@ function Staff() {
                                 <div className="home-user-menu">
                                     <div className="user-avatar-wrapper" onClick={() => toggleUserMenu()}>
                                         <div className="user-avatar">
-                                            <svg viewBox="0 0 24 24" fill="none">
-                                                <circle cx="12" cy="8" r="4" fill="#5E4030" />
-                                                <path d="M4 20c0-4 3.5-7 8-7s8 3 8 7" fill="#5E4030" />
-                                                <circle cx="12" cy="8" r="3.5" fill="#8B6F47" />
-                                                <ellipse cx="10" cy="7.5" rx="0.8" ry="1" fill="#2D1810" />
-                                                <ellipse cx="14" cy="7.5" rx="0.8" ry="1" fill="#2D1810" />
-                                                <path d="M10.5 9c.5.3 1 .5 1.5.5s1-.2 1.5-.5" stroke="#8B6F47" strokeWidth="0.5" strokeLinecap="round" />
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="12" cy="8" r="5" fill="#5E4030"/>
+                                                <path d="M5 20C5 16.134 8.13401 13 12 13C15.866 13 19 16.134 19 20H5Z" fill="#5E4030"/>
                                             </svg>
                                         </div>
                                         <span className="admin-label">{userName}</span>
