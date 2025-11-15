@@ -65,20 +65,17 @@
 }
 
 .user-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-full);
-    background: var(--color-peach);
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-md);
     overflow: hidden;
 }
 
-.user-avatar svg {
-    width: 40px;
-    height: 40px;
+.user-avatar img {
+    width: 30px;
+    height: 30px;
 }
 
 .admin-label {
@@ -140,27 +137,27 @@
 }
 
 .home-dashboard-card:nth-child(1) {
-    grid-column: 2;
+    grid-column: 3;
     grid-row: 1;
 }
 
 .home-dashboard-card:nth-child(2) {
     grid-column: 3;
-    grid-row: 1;
+    grid-row: 2;
 }
 
 .home-dashboard-card:nth-child(3) {
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 2;
 }
 
 .home-dashboard-card:nth-child(4) {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 1;
 }
 
 .home-dashboard-card:nth-child(5) {
-    grid-column: 3;
+    grid-column: 1;
     grid-row: 2;
 }
 

@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./delivery.css";
 import bg from './assets/DELIVERY.png';
+import usericon from './assets/user.png';
 
-function Delivery({userName, logout, userid}) {
+function Delivery() {
+    const { logout, userid, userName } = useAuth();
     const [activeTab, setActiveTab] = useState("suppliers");
     const [deliveries, setDeliveries] = useState([]);
     const [suppliers, setSuppliers] = useState([]);
@@ -22,9 +24,11 @@ function Delivery({userName, logout, userid}) {
             fetch('https://supermarket-backend-f5yc.onrender.com/deliveries')
                 .then(res=>res.json()
                 )
-                .then(data=>{setDeliveries(data); setServerError(false);})
+                .then(data=>{setDeliveries(data);})
                 .catch(err=> {
                     console.error('error fetching data :',err);
+                    alert('Error fetching delivery data from server.');
+                    navigate('/home');
                 });
         }
         else if(activeTab == "suppliers"){
@@ -34,6 +38,8 @@ function Delivery({userName, logout, userid}) {
                 .then(data=>{setSuppliers(data);})
                 .catch(error=> {
                     console.error('error fetching data:',error);
+                    alert('Error fetching suppliers data from server.');
+                    navigate('/home');
                 });
         }
     },[activeTab])
@@ -137,10 +143,9 @@ function Delivery({userName, logout, userid}) {
                                 <div className="home-user-menu">
                                     <div className="user-avatar-wrapper" onClick={()=>toggleUserMenu()}>
                                         <div className="user-avatar">
-                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <circle cx="12" cy="8" r="5" fill="#5E4030"/>
-                                                <path d="M5 20C5 16.134 8.13401 13 12 13C15.866 13 19 16.134 19 20H5Z" fill="#5E4030"/>
-                                            </svg>
+                                            <div className="user-avatar">
+                                              <img src={usericon}></img>
+                                            </div>
                                         </div>
                                         <span className="admin-label">{userName}</span>
                                     </div>
@@ -203,7 +208,7 @@ function Delivery({userName, logout, userid}) {
 
                     {activeTab === "suppliers" && (
                         <div className="suppliers-container">
-                            {suppliers.map((s, idx) => (
+                            {Array.isArray(suppliers) &&  suppliers.map((s, idx) => (
                                 <div className="supplier-card" key={idx} onClick={() => openSupplierDeliveryModal(s)}>
                                     <h3>{s.s_name}</h3>
                                     <p><strong>ID:</strong> {s.supplier_id}</p>
@@ -221,7 +226,7 @@ function Delivery({userName, logout, userid}) {
 
                     {activeTab === "deliveries" && (
                         <div className="deliveries-container">
-                            {deliveries.map((d, idx) => (
+                            {Array.isArray(deliveries) && deliveries.map((d, idx) => (
                                 <div className="delivery-card" key={idx}>
                                     <h3>Product ID: {d.product_id}</h3>
                                     <p><strong>Date:</strong> {d.date.toString().split('T')[0]}</p>

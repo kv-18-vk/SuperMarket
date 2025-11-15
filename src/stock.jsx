@@ -1,31 +1,77 @@
 import { useState,useEffect } from "react";
 import { useAuth } from "./auth";
-import bg from "./assets/STOCK.png"
-
+import bg from "./assets/STOCK.png";
+import { useNavigate } from "react-router-dom";
+import usericon from './assets/user.png';
+import io from "socket.io-client";
+const socket = io("https://supermarket-backend-f5yc.onrender.com");
 function Stock() {
-
+    socket.on("stockUpdated", () => {
+        window.location.reload();
+    });
     const { logout, userName } = useAuth();
-
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("present");
     const [menuOpen, setMenuOpen] = useState(false);
 
     const [products, setproducts] = useState([]);
     const [expired, setexpired] = useState([]);
 
-    useEffect(()=>{
-        if(activeTab == "present"){
+    useEffect(() => {
+        loadInitialData();
+    }, [activeTab]);
+    function refreshStock() {
+        if (activeTab === "present") {
             fetch('https://supermarket-backend-f5yc.onrender.com/stock')
-                .then(res=>res.json())
-                .then(data=>{setproducts(data);})
-                .catch(err=> console.error('error fetching data :',err));
-        }
-        else if(activeTab == "expired"){
+                .then(res => res.json())
+                .then(data => setproducts(data))
+                .catch(err => console.warn("Auto-refresh failed:", err));
+        } else {
             fetch('https://supermarket-backend-f5yc.onrender.com/expired')
-                .then(res=>res.json())
-                .then(data=>{setexpired(data);})
-                .catch(error=> console.error('error fetching data:',error));
+                .then(res => res.json())
+                .then(data => setexpired(data))
+                .catch(err => console.warn("Auto-refresh failed:", err));
         }
-    },[activeTab])
+    }
+    function loadInitialData() {
+        if (activeTab === "present") {
+            fetch('https://supermarket-backend-f5yc.onrender.com/stock')
+                .then(res => res.json())
+                .then(data => setproducts(data))
+                .catch(err => {
+                    console.error("Initial load error:", err);
+                    alert("Error fetching data from server");
+                    navigate("/home");
+                });
+        } else {
+            fetch('https://supermarket-backend-f5yc.onrender.com/expired')
+                .then(res => res.json())
+                .then(data => setexpired(data))
+                .catch(err => {
+                    console.error("Initial load error:", err);
+                    alert("Error fetching data from server");
+                    navigate("/home");
+                });
+        }
+    }
+    useEffect(() => {
+        function handleStockUpdate() {
+            refreshStock();
+        }
+
+        socket.on("stockUpdated", handleStockUpdate);
+
+        
+        socket.on("connect_error", err => {
+            console.warn("Socket connect error:", err.message);
+        });
+
+        return () => {
+            socket.off("stockUpdated", handleStockUpdate);
+            socket.off("connect_error");
+        };
+    }, [activeTab]);
+
 
     function toggleUserMenu(){
         setMenuOpen(!menuOpen);
@@ -71,10 +117,9 @@ function Stock() {
                                 <div className="home-user-menu">
                                     <div className="user-avatar-wrapper" onClick={()=>toggleUserMenu()}>
                                         <div className="user-avatar">
-                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <circle cx="12" cy="8" r="5" fill="#5E4030"/>
-                                                <path d="M5 20C5 16.134 8.13401 13 12 13C15.866 13 19 16.134 19 20H5Z" fill="#5E4030"/>
-                                            </svg>
+                                            <div className="user-avatar">
+                                                <img src={usericon}></img>
+                                            </div>
                                         </div>
                                         <span className="admin-label">{userName}</span>
                                     </div>
@@ -128,7 +173,7 @@ function Stock() {
                     {activeTab === "present" && (
                         <div>
                             <div className="stocks-container">
-                                {products.map((p, idx) => (
+                                {Array.isArray(products) && products.map((p, idx) => (
                                     <div className="stock-card" key={idx}>
                                         <div className="card-header">
                                             <h3>Product ID: {p.product_id}</h3>
@@ -149,7 +194,7 @@ function Stock() {
                     {activeTab === "expired" && (
                         <div>
                             <div className="stocks-container">
-                                {expired.map((p, idx) => (
+                                {Array.isArray(expired) && expired.map((p, idx) => (
                                     <div className="stock-card" key={idx}>
                                         <div className="card-header">
                                             <h3>Product ID: {p.product_id}</h3>

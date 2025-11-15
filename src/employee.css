@@ -151,6 +151,60 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
+.edit-employee-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.edit-employee-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2196F3;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-employee-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.edit-employee-id-input {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.edit-employee-data {
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+    align-items: center;
+    justify-content: center;
+}
+.edit-inputs-spacing{
+    display:flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.edit-employee-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+}
+
 .add-employee-inputs input:focus, .delete-employee-form input:focus, .edit-employee-form input:focus {
     border-color: #4CAF50;
     outline: none;

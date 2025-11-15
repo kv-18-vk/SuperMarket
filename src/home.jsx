@@ -1,15 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from './auth';
+import usericon from './assets/user.png';
 
 function Home() {
     const navigate = useNavigate();
     const {logout,userName,designation} = useAuth();
     const access = {
-        stock: designation!== "cashier",
-        report: designation!== "cashier",
-        delivery: designation!== "cashier",
-        staff: designation === "admin"
+        stock: designation!== "Cashier",
+        report: designation!== "Cashier",
+        delivery: designation!== "Cashier",
+        staff: designation === "Admin"
     }
 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -32,10 +33,7 @@ function Home() {
                         <div className="home-user-menu">
                             <div className="user-avatar-wrapper" onClick={()=>toggleUserMenu()}>
                                 <div className="user-avatar">
-                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12" cy="8" r="5" fill="#5E4030"/>
-                                        <path d="M5 20C5 16.134 8.13401 13 12 13C15.866 13 19 16.134 19 20H5Z" fill="#5E4030"/>
-                                    </svg>
+                                    <img src={usericon}></img>
                                 </div>
                                 <span className="admin-label">{userName}</span>
                             </div>
@@ -52,6 +50,7 @@ function Home() {
                 </header>
 
                 <main className="home-dashboard-grid">
+                    {access.delivery && (
                     <div className="home-dashboard-card" onClick={()=>navigate('/home/delivery')}>
                         <div className="home-card-icon">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,6 +60,7 @@ function Home() {
                         <h2 className="home-card-title">DELIVERY</h2>
                         <p className="home-card-description">Manage delivery schedules, track shipments, and coordinate with delivery personnel.</p>
                     </div>
+                    )}
 
                     <div className="home-dashboard-card" onClick={()=>navigate('/home/billing')}>
                         <div className="home-card-icon">
@@ -72,6 +72,7 @@ function Home() {
                         <p className="home-card-description">Generate invoices, process payments, and manage financial transactions seamlessly.</p>
                     </div>
 
+                    {access.stock && (
                     <div className="home-dashboard-card" onClick={()=>navigate('/home/stock')}>
                         <div className="home-card-icon">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,7 +82,9 @@ function Home() {
                         <h2 className="home-card-title">STOCK</h2>
                         <p className="home-card-description">Monitor inventory levels, track stock movements, and manage product availability.</p>
                     </div>
+                    )}
 
+                    {access.staff && (
                     <div className="home-dashboard-card" onClick={()=>navigate('/home/staff')}>
                         <div className="home-card-icon">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,7 +94,9 @@ function Home() {
                         <h2 className="home-card-title">EMPLOYEE</h2>
                         <p className="home-card-description">Manage employee records, schedules, attendance, and performance tracking.</p>
                     </div>
+                    )}
 
+                    {access.report && (
                     <div className="home-dashboard-card" onClick={()=>navigate('/home/report')}>
                         <div className="home-card-icon">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,6 +106,7 @@ function Home() {
                         <h2 className="home-card-title">PROFITS</h2>
                         <p className="home-card-description">Analyze revenue, expenses, profit margins, and financial performance metrics.</p>
                     </div>
+                    )}
                 </main>
             </div>
         </div>

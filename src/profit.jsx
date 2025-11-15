@@ -3,6 +3,7 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, PieChart, Pie, Cell,ResponsiveContainer
 } from "recharts";
 import { useAuth } from './auth';
+import usericon from './assets/user.png';
 import bg from "./assets/PROFITS.png";
 
 const Report = () => {
@@ -185,10 +186,9 @@ const Report = () => {
                     <div className="home-user-menu">
                         <div className="user-avatar-wrapper" onClick={()=>toggleUserMenu()}>
                             <div className="user-avatar">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="8" r="5" fill="#5E4030"/>
-                                    <path d="M5 20C5 16.134 8.13401 13 12 13C15.866 13 19 16.134 19 20H5Z" fill="#5E4030"/>
-                                </svg>
+                                <div className="user-avatar">
+                                    <img src={usericon}></img>
+                                </div>
                             </div>
                             <span className="admin-label">{userName}</span>
                         </div>

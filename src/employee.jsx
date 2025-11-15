@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./auth";
-import reportImage from "./assets/EMPLOYEE.png"; // Using report.png for employee page
+import reportImage from "./assets/EMPLOYEE.png"; 
+import { useNavigate } from "react-router-dom";
+import usericon from './assets/user.png';
 
 function Staff() {
     const { userName, logout } = useAuth();
     const [employees, setData] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const navigate = useNavigate();
     useEffect(() => {
         fetch('https://supermarket-backend-f5yc.onrender.com/staff')
             .then(res => res.json())
             .then(data => {
                 setData(data);
             })
-            .catch(error => console.error('Error fetching employee data:', error));
+            .catch(error => {
+                console.error('Error fetching employee data:', error);
+                alert('Error fetching employee data : server error');
+                navigate('/home');
+            });
     }, []);
 
     function toggleUserMenu() {
@@ -29,7 +35,108 @@ function Staff() {
         document.querySelector('.edit-employee-form').classList.toggle('hide');
         document.querySelector('.add-employee-form').classList.add('hide');
         document.querySelector('.delete-employee-form').classList.add('hide');
+        
+        setTimeout(() => {
+            const idInputContainer = document.querySelector('.edit-employee-id-input');
+            const employeeDataContainer = document.querySelector('.edit-employee-data');
+            
+            if (idInputContainer) {
+                idInputContainer.style.display = 'flex';
+            }
+            if (employeeDataContainer) {
+                employeeDataContainer.style.display = 'none';
+            }
+            
+            const employeeIdInput = document.querySelector('.edit-employee-inputs input[placeholder="Employee_ID"]');
+            if (employeeIdInput) {
+                employeeIdInput.value = '';
+            }
+            
+            const editInputs = document.querySelectorAll('.edit-employee-data input');
+            editInputs.forEach(input => {
+                input.value = '';
+                input.disabled = true;
+            });
+        }, 10);
     }
+
+    function fetchEmployeeData() {
+        const employee_id = document.querySelector('.edit-employee-inputs input[placeholder="Employee_ID"]');
+        if (!employee_id.value) {
+            alert("Please enter an employee ID");
+            return;
+        }
+
+        const employee = employees.find(emp => emp.employee_id == employee_id.value);
+        
+        if (!employee) {
+            alert("Employee not found");
+            return;
+        }
+
+        const idInputContainer = document.querySelector('.edit-employee-id-input');
+        const employeeDataContainer = document.querySelector('.edit-employee-data');
+        
+        if (idInputContainer) {
+            idInputContainer.style.display = 'none';
+        }
+        if (employeeDataContainer) {
+            employeeDataContainer.style.display = 'flex';
+        }
+
+        const nameInput = document.querySelector('.edit-employee-data input[placeholder="Name"]');
+        const designationInput = document.querySelector('.edit-employee-data input[placeholder="Designation"]');
+        const wageInput = document.querySelector('.edit-employee-data input[placeholder="Daily Wage"]');
+        const passwordInput = document.querySelector('.edit-employee-data input[placeholder="Password"]');
+        const statusInput = document.querySelector('.edit-employee-data input[placeholder="Status"]');
+
+        if (nameInput) nameInput.value = employee.name;
+        if (designationInput) designationInput.value = employee.designation;
+        if (wageInput) wageInput.value = employee.Daily_wage;
+        if (passwordInput) passwordInput.value = employee.password;
+        if (statusInput) statusInput.value = employee.status;
+
+        if (nameInput) nameInput.disabled = false;
+        if (designationInput) designationInput.disabled = false;
+        if (wageInput) wageInput.disabled = false;
+        if (passwordInput) passwordInput.disabled = false;
+        if (statusInput) statusInput.disabled = false;
+    }
+
+    function EditEmployee() {
+        const employee_id_input = document.querySelector('.edit-employee-inputs input[placeholder="Employee_ID"]');
+        const name = document.querySelector('.edit-employee-data input[placeholder="Name"]');
+        const designation = document.querySelector('.edit-employee-data input[placeholder="Designation"]');
+        const Daily_wage = document.querySelector('.edit-employee-data input[placeholder="Daily Wage"]');
+        const password = document.querySelector('.edit-employee-data input[placeholder="Password"]');
+        const status = document.querySelector('.edit-employee-data input[placeholder="Status"]');
+        
+        const employee_id = employee_id_input.value;
+        
+        if (!employee_id || !name.value || !designation.value || !Daily_wage.value || !password.value || !status.value) {
+            alert("Please enter employee data first");
+            return;
+        }
+        
+        const updateData = { employee_id: parseInt(employee_id) ,name: name.value, designation: designation.value, daily_wage: parseFloat(Daily_wage.value), password: password.value, status: status.value };
+
+        fetch('https://supermarket-backend-f5yc.onrender.com/staff/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateData),
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            setTimeout(() => { window.location.reload(); }, 100);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
     function handleDelete() {
         document.querySelector('.delete-employee-form').classList.toggle('hide');
         document.querySelector('.edit-employee-form').classList.add('hide');
@@ -60,6 +167,7 @@ function Staff() {
         Daily_wage.value = "";
         password.value = "";
     }
+
     function DeleteEmployee() {
         const employee_id = document.querySelector('.delete-employee-inputs input:nth-child(2)');
         fetch('https://supermarket-backend-f5yc.onrender.com/staff/deleteemployee', {
@@ -92,10 +200,9 @@ function Staff() {
                                 <div className="home-user-menu">
                                     <div className="user-avatar-wrapper" onClick={() => toggleUserMenu()}>
                                         <div className="user-avatar">
-                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <circle cx="12" cy="8" r="5" fill="#5E4030"/>
-                                                <path d="M5 20C5 16.134 8.13401 13 12 13C15.866 13 19 16.134 19 20H5Z" fill="#5E4030"/>
-                                            </svg>
+                                            <div className="user-avatar">
+                                                <img src={usericon}></img>
+                                            </div>
                                         </div>
                                         <span className="admin-label">{userName}</span>
                                     </div>
@@ -125,7 +232,7 @@ function Staff() {
                             </tr>
                         </thead>
                         <tbody className="staff-list">
-                            {employees.map((emp, i) => (
+                            { Array.isArray(employees) &&  employees.filter(emp => emp.status === "Working").map((emp, i) => (
                                 <tr key={i}>
                                     <td>{emp.employee_id}</td>
                                     <td>{emp.name}</td>
@@ -152,7 +259,23 @@ function Staff() {
                     <button onClick={AddEmployee}>Submit</button>
                 </div>
                 <div className="edit-employee-form hide">
-                    <p>Select Employee_ID: </p>
+                    <div className="edit-employee-inputs">
+                        <div className="edit-employee-id-input">
+                            <p>Select Employee_ID: </p>
+                            <input type="number" placeholder="Employee_ID"></input>
+                            <button type="button" onClick={fetchEmployeeData} style={{margin: "10px 0", padding: "8px 15px", backgroundColor: "#2196F3", color: "white", border: "none", borderRadius: "5px", cursor: "pointer"}}>Fetch Employee</button>
+                        </div>
+                        <div className="edit-employee-data" style={{display: "none"}}>
+                            <div className="edit-inputs-spacing">
+                                <input type="text" placeholder="Name" disabled></input>
+                                <input type="text" placeholder="Designation" disabled></input>
+                                <input type="number" placeholder="Daily Wage" disabled></input>
+                                <input type="password" placeholder="Password" disabled></input>
+                                <input type="text" placeholder="Status" disabled></input>
+                            </div>
+                            <button onClick={EditEmployee}>Update Employee</button>
+                        </div>
+                    </div>
                 </div>
                 <div className="delete-employee-form hide">
                     <div className="delete-employee-inputs">

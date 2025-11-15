@@ -1,4 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
+import io from "socket.io-client";
+
+const socket = io("https://supermarket-backend-f5yc.onrender.com");
 
 const AuthContext = createContext();
 
@@ -22,6 +25,22 @@ export function AuthProvider({ children }) {
         }   
         setloading(false);
     }, []);
+    useEffect(() => {
+        if (!userid) return;
+
+        const channel = "statusChanged:" + userid;
+
+        socket.on(channel, (status) => {
+            if (status !== "Working") {
+                alert(`Your status is updated to ${status}. Logging out.`);
+                logout();
+            }
+        });
+
+        return () => {
+            socket.off(channel);
+        };
+    }, [userid]);
 
   const login = (id,name, role) => {
     setAuthenticated(true);
