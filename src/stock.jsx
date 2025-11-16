@@ -6,9 +6,6 @@ import usericon from './assets/user.png';
 import io from "socket.io-client";
 const socket = io("https://supermarket-backend-f5yc.onrender.com");
 function Stock() {
-    socket.on("stockUpdated", () => {
-        window.location.reload();
-    });
     const { logout, userName } = useAuth();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("present");

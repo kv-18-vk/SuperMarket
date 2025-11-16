@@ -6,7 +6,8 @@ import { useAuth } from './auth';
 import usericon from './assets/user.png';
 import bg from "./assets/PROFITS.png";
 import { useNavigate } from "react-router-dom";
-
+import { io } from "socket.io-client";
+const socket = io("https://supermarket-backend-f5yc.onrender.com");
 const Report = () => {
   const navigate = useNavigate();
   const {logout,userName,designation} = useAuth();
@@ -178,8 +179,7 @@ const Report = () => {
 
   };
 
-  useEffect(() => {
-
+  function load_data(){
     fetch('https://supermarket-backend-f5yc.onrender.com/report/yearly-stats', {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -203,7 +203,20 @@ const Report = () => {
     setFrom(fromDate);
     setTo(toDate);
     fetchData(fromDate, toDate);
+  }
+
+  useEffect(() => {
+    load_data();
   }, []);
+
+  useEffect(()=>{
+    socket.on("stockUpdated", () => {
+        load_data();
+    });
+    return () => {
+        socket.off("stockUpdated");
+    };
+  },[]);
 
   const handleFilter = () => {
     if (!from || !to) return alert("Select date range!");
