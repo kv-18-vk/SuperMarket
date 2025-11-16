@@ -5,9 +5,10 @@ import {
 import { useAuth } from './auth';
 import usericon from './assets/user.png';
 import bg from "./assets/PROFITS.png";
+import { useNavigate } from "react-router-dom";
 
 const Report = () => {
-
+  const navigate = useNavigate();
   const {logout,userName,designation} = useAuth();
   const [summary, setSummary] = useState({});
   const [loss_summary , setLossSummary] = useState({});
@@ -45,7 +46,12 @@ const Report = () => {
       body: JSON.stringify({ year })
     })
     .then(res => res.json())
-    .then(data => setMonthlyData(data))
+    .then(data => {
+      if(data.error){
+        alert(error);
+        navigate('/home');
+      }
+      setMonthlyData(data);})
     .catch(err => console.error("Error fetching monthly data:", err));
   };
   const fetchData = (f = from, t = to) => {
@@ -57,6 +63,10 @@ const Report = () => {
     })
     .then(res => res.json())
     .then(data => {
+        if(data.error){
+            console.error("Error in date data response:", data.error);
+            return;
+        }
         setDateData(
             data.map(item => ({
                 ...item,
@@ -76,7 +86,12 @@ const Report = () => {
         body: JSON.stringify({ from: f, to: t })
     })
     .then(res => res.json())
-    .then(data => setSummary(data))
+    .then(data => {
+      if(data.error){
+        console.error("Error in summary data response:", data.error);
+        return;
+      }
+      setSummary(data);})
     .catch(err => console.error("Error fetching summary data:", err));
 
     fetch('https://supermarket-backend-f5yc.onrender.com/api/profits/byCategory', {
@@ -86,6 +101,10 @@ const Report = () => {
     })
     .then(res => res.json())
     .then(data => {
+        if(data.error){
+          console.error("Error in category data response:", data.error);
+          return;
+        }
         setCategoryData(
             data.map(item => ({
                 ...item,
@@ -101,7 +120,12 @@ const Report = () => {
         body: JSON.stringify({ from: f, to: t })
     })
     .then(res => res.json())
-    .then(data => setLossSummary(data))
+    .then(data => {
+      if(data.error){
+        console.error("Error:" , data.error);
+        return;
+      }
+      setLossSummary(data);})
     .catch(err => console.error("Error fetching summary data:", err));
 
     fetch('https://supermarket-backend-f5yc.onrender.com/api/loss/byCategory', {
@@ -111,6 +135,10 @@ const Report = () => {
     })
     .then(res => res.json())
     .then(data => {
+        if(data.error){
+          console.error("error:" , data.error);
+          return;
+        }
         setLossCategoryData(
             data.map(item => ({
                 ...item,
@@ -126,7 +154,12 @@ const Report = () => {
         body: JSON.stringify({ from: f, to: t })
     })
     .then(res => res.json())
-    .then(data => setProductData(data))
+    .then(data => {
+      if(data.error){
+          console.error("error:" , data.error);
+          return;
+        }
+      setProductData(data);})
     .catch(err => console.error("Error fetching product data:", err));
 
     fetch('https://supermarket-backend-f5yc.onrender.com/api/loss/byProduct', {
@@ -135,7 +168,12 @@ const Report = () => {
         body: JSON.stringify({ from: f, to: t })
     })
     .then(res => res.json())
-    .then(data => setLossProductData(data))
+    .then(data => {
+      if(data.error){
+          console.error("error:" , data.error);
+          return;
+        }
+      setLossProductData(data);})
     .catch(err => console.error("Error fetching product data:", err));
 
   };
@@ -148,6 +186,10 @@ const Report = () => {
     })
     .then(res => res.json())
     .then(data => {
+      if(data.error){
+          console.error("error:" , data.error);
+          return;
+        }
       setYearlyData(data);
       const years = data.map((d) => d.year);
       setAvailableYears(years);
@@ -213,15 +255,21 @@ const Report = () => {
             </div>
             <div className="card">
               <h3>Total Saled Revenue</h3>
+             
               <p>₹{summary.total_revenue || 0}</p>
+              
             </div>
             <div className="card profit">
               <h3>Total Sales Profit</h3>
+              
               <p>₹{summary.total_profit || 0}</p>
+              
             </div>
             <div className="card loss">
               <h3>Total Expired Loss </h3>
+              
               <p>₹{loss_summary.total_loss || 0}</p>
+              
             </div>
           </div>
           <div className="filter-section">
@@ -237,6 +285,7 @@ const Report = () => {
       <div className="charts-container">
         <div className="chart-card profit" onClick={()=>setExpandedChart("bar")}>
           <h3>Sales Profit by Category</h3>
+          {Array.isArray(categoryData) && (
           <BarChart width={450} height={250} data={categoryData}>
             <XAxis dataKey="category" />
             <YAxis />
@@ -244,10 +293,12 @@ const Report = () => {
             <Legend />
             <Bar dataKey="profit" fill="#82ca9d" name="sales-profit" />
           </BarChart>
+          )}
         </div>
 
         <div className="chart-card profit" onClick={()=>setExpandedChart("line")}>
           <h3>Profit Trend (By Date)</h3>
+          {Array.isArray(dateData) && (
           <LineChart width={450} height={250} data={dateData}>
             <XAxis dataKey="date" tickMargin={10} padding={{ left: 20 }} />
             <YAxis />
@@ -255,10 +306,12 @@ const Report = () => {
             <Legend />
             <Line type="monotone" dataKey="profit" strokeLinecap="#8884d8" name="sales-profit" />
           </LineChart>
+          )}
         </div>
 
         <div className="chart-card profit" onClick={()=>setExpandedChart("pie")}>
           <h3>Sales Profit - Category Contribution</h3>
+          {Array.isArray(categoryData) && (
           <ResponsiveContainer width={450} height={250}>
           <PieChart>
             <Pie
@@ -278,10 +331,12 @@ const Report = () => {
           </PieChart>
           <Legend/>
           </ResponsiveContainer>
+          )}
         </div>
 
         <div className="chart-card loss" onClick={()=>setExpandedChart("loss-bar")}>
           <h3>Expired Loss by Category</h3>
+          {Array.isArray(lossCategoryData) && (
           <BarChart width={450} height={250} data={lossCategoryData}>
             <XAxis dataKey="category" />
             <YAxis />
@@ -289,10 +344,12 @@ const Report = () => {
             <Legend />
             <Bar dataKey="total_loss" fill="#c34f4fff" name="expired-loss" />
           </BarChart>
+          )}
         </div>
 
         <div className="chart-card loss" onClick={()=>setExpandedChart("loss-pie")}>
           <h3>Expired Loss Category Contribution</h3>
+          {Array.isArray(lossCategoryData) && (
           <ResponsiveContainer width={450} height={250}>
           <PieChart>
             <Pie
@@ -312,6 +369,7 @@ const Report = () => {
           </PieChart>
           <Legend/>
           </ResponsiveContainer>
+          )}
         </div>
 
       </div>
@@ -328,7 +386,7 @@ const Report = () => {
             </tr>
           </thead>
           <tbody>
-            {productData.map((p) => (
+            { Array.isArray(productData) && productData.map((p) => (
               <tr key={p.product_id}>
                 <td>{p.product_name}</td>
                 <td>₹{p.cost}</td>
@@ -350,7 +408,7 @@ const Report = () => {
             </tr>
           </thead>
           <tbody>
-            {lossProductData.map((p) => (
+            { Array.isArray(lossProductData) && lossProductData.map((p) => (
               <tr key={p.product_id}>
                 <td>{p.product_name}</td>
                 <td>{p.quantity_expired}</td>
@@ -370,7 +428,7 @@ const Report = () => {
             fetchMonthlyData(year);
           }}
         >
-          {availableYears.map((y) => (
+          { Array.isArray(availableYears) && availableYears.map((y) => (
             <option key={y} value={y}>{y}</option>
           ))}
         </select>
@@ -378,6 +436,7 @@ const Report = () => {
       <div className="charts-container">
         <div className="chart-card stats" onClick={()=>setExpandedChart("monthly-bar")}>
           <h3>Monthly Stats - {year}</h3>
+          {Array.isArray(monthlyData) && (
           <BarChart width={600} height={300} data={monthlyData}>
             <XAxis dataKey="month" />
             <YAxis />
@@ -386,9 +445,11 @@ const Report = () => {
             <Bar dataKey="total_profit" fill="#4CAF50" name="Sales-Profit" />
             <Bar dataKey="total_loss" fill="#F44336" name="Expired-Loss" />
           </BarChart>
+          )}
         </div>
         <div className="chart-card stats" onClick={()=>setExpandedChart("yearly-bar")}>
           <h3>Yearly Stats</h3>
+          {Array.isArray(yearlyData) && (
           <BarChart width={600} height={300} data={yearlyData}>
             <XAxis dataKey="year" />
             <YAxis />
@@ -397,10 +458,11 @@ const Report = () => {
             <Bar dataKey="total_profit" fill="#4CAF50" name="Total Profit" />
             <Bar dataKey="total_loss" fill="#F44336" name="Expired Loss" />
           </BarChart>
+          )}
         </div>
       </div>
 
-      {expandedChart && (
+      {expandedChart && Array.isArray(categoryData) && Array.isArray(dateData) && Array.isArray(lossCategoryData) && Array.isArray(lossProductData) && Array.isArray(productData) && Array.isArray(availableYears) && Array.isArray(monthlyData) && Array.isArray(yearlyData) && (
         <div className="fullscreen-modal" onClick={() => setExpandedChart(null)}>
             {expandedChart === 'bar' && (
                 <div>

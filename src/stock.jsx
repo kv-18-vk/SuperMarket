@@ -37,7 +37,14 @@ function Stock() {
         if (activeTab === "present") {
             fetch('https://supermarket-backend-f5yc.onrender.com/stock')
                 .then(res => res.json())
-                .then(data => setproducts(data))
+                .then(data => {
+                    if(data.error){
+                        alert(data.error);
+                        navigate("/home");
+                        return;
+                    }
+                    setproducts(data);
+                })
                 .catch(err => {
                     console.error("Initial load error:", err);
                     alert("Error fetching data from server");
@@ -46,7 +53,13 @@ function Stock() {
         } else {
             fetch('https://supermarket-backend-f5yc.onrender.com/expired')
                 .then(res => res.json())
-                .then(data => setexpired(data))
+                .then(data => {
+                    if(data.error){
+                        alert(data.error);
+                        navigate("/home");
+                        return;
+                    }
+                    setexpired(data);})
                 .catch(err => {
                     console.error("Initial load error:", err);
                     alert("Error fetching data from server");

@@ -30,15 +30,13 @@ function Billing() {
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({items: billItems})
             })
-            .then(async res => {
-                const data = await res.text();
-                try {
-                    return JSON.parse(data);
-                } catch {
-                    throw new Error("Server did not return JSON: " + data);
-                }
-            })
+            .then(res => res.json())
             .then(data => {
+                if(data.error){
+                    alert(data.error);
+                    navigate('/home');
+                    return;
+                }
                 setbilleditems(data);
                 setpagestate("makebill");
             })
@@ -322,9 +320,11 @@ function Billing() {
                                         ))}
                                     </tbody>
                                 </table>
+                                {Array.isArray(billeditems) && (
                                 <div className="total-section">
                                     <h3>Total Amount: ₹ {billeditems.reduce((acc, item) => acc + item.final_price, 0)}</h3>
                                 </div>
+                                )}
                                 <div className="print-footer">
                                     <p>Thank you for shopping with us!</p>
                                     <p>Visit again soon.</p>
@@ -354,7 +354,9 @@ function Billing() {
                             </div>
                             
                             <div className="billing-details">
+                                {Array.isArray(billeditems) && (
                                 <h3>Total Amount: ₹ {billeditems.reduce((acc, item) => acc + item.final_price, 0)}</h3>
+                                )}
                                 <div className="billing-options">
                                     <button className="bill-btn new" onClick={()=> {savebill(); printBill();}}>Payment done & Print Bill</button>
                                     <button className="bill-btn clear" onClick={()=>createNewBill()}>Clear and make New Bill</button>

@@ -24,7 +24,13 @@ function Delivery() {
             fetch('https://supermarket-backend-f5yc.onrender.com/deliveries')
                 .then(res=>res.json()
                 )
-                .then(data=>{setDeliveries(data);})
+                .then(data=>{
+                    if(data.error){
+                        alert(data.error);
+                        navigate('/home');
+                        return;
+                    }
+                    setDeliveries(data);})
                 .catch(err=> {
                     console.error('error fetching data :',err);
                     alert('Error fetching delivery data from server.');
@@ -35,7 +41,13 @@ function Delivery() {
             fetch('https://supermarket-backend-f5yc.onrender.com/suppliers')
                 .then(res=>res.json()
                 )
-                .then(data=>{setSuppliers(data);})
+                .then(data=>{
+                    if(data.error){
+                        alert(data.error);
+                        navigate('/home');
+                        return;
+                    }
+                    setSuppliers(data);})
                 .catch(error=> {
                     console.error('error fetching data:',error);
                     alert('Error fetching suppliers data from server.');

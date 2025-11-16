@@ -13,6 +13,11 @@ function Staff() {
         fetch('https://supermarket-backend-f5yc.onrender.com/staff')
             .then(res => res.json())
             .then(data => {
+                if(data.error){
+                    alert(data.error);
+                    navigate('/home');
+                    return;
+                }
                 setData(data);
             })
             .catch(error => {
