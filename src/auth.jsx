@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import io from "socket.io-client";
 
-const socket = io("https://supermarket-backend-f5yc.onrender.com");
+const socket = io(import.meta.env.VITE_BACKEND_URL);
 
 const AuthContext = createContext();
 

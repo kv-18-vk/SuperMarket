@@ -4,7 +4,7 @@ import bg from "./assets/STOCK.png";
 import { useNavigate } from "react-router-dom";
 import usericon from './assets/user.png';
 import io from "socket.io-client";
-const socket = io("https://supermarket-backend-f5yc.onrender.com");
+const socket = io(import.meta.env.VITE_BACKEND_URL);
 function Stock() {
     const { logout, userName } = useAuth();
     const navigate = useNavigate();
@@ -19,12 +19,12 @@ function Stock() {
     }, [activeTab]);
     function refreshStock() {
         if (activeTab === "present") {
-            fetch('https://supermarket-backend-f5yc.onrender.com/stock')
+            fetch(import.meta.env.VITE_BACKEND_URL + '/stock')
                 .then(res => res.json())
                 .then(data => setproducts(data))
                 .catch(err => console.warn("Auto-refresh failed:", err));
         } else {
-            fetch('https://supermarket-backend-f5yc.onrender.com/expired')
+            fetch(import.meta.env.VITE_BACKEND_URL + '/expired')
                 .then(res => res.json())
                 .then(data => setexpired(data))
                 .catch(err => console.warn("Auto-refresh failed:", err));
@@ -32,7 +32,7 @@ function Stock() {
     }
     function loadInitialData() {
         if (activeTab === "present") {
-            fetch('https://supermarket-backend-f5yc.onrender.com/stock')
+            fetch(import.meta.env.VITE_BACKEND_URL + '/stock')
                 .then(res => res.json())
                 .then(data => {
                     if(data.error){
@@ -48,7 +48,7 @@ function Stock() {
                     navigate("/home");
                 });
         } else {
-            fetch('https://supermarket-backend-f5yc.onrender.com/expired')
+            fetch(import.meta.env.VITE_BACKEND_URL + '/expired')
                 .then(res => res.json())
                 .then(data => {
                     if(data.error){

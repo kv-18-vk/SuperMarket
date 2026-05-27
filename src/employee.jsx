@@ -10,7 +10,7 @@ function Staff() {
     const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
-        fetch('https://supermarket-backend-f5yc.onrender.com/staff')
+        fetch(import.meta.env.VITE_BACKEND_URL + '/staff')
             .then(res => res.json())
             .then(data => {
                 if(data.error){
@@ -125,7 +125,7 @@ function Staff() {
         
         const updateData = { employee_id: parseInt(employee_id) ,name: name.value, designation: designation.value, daily_wage: parseFloat(Daily_wage.value), password: password.value, status: status.value };
 
-        fetch('https://supermarket-backend-f5yc.onrender.com/staff/update', {
+        fetch(import.meta.env.VITE_BACKEND_URL + '/staff/update', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ function Staff() {
             alert("Please fill all the fields");
             return;
         }
-        fetch('https://supermarket-backend-f5yc.onrender.com/staff/addemployee', {
+        fetch(import.meta.env.VITE_BACKEND_URL + '/staff/addemployee', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ employee_id: employee_id.value, name: name.value, designation: designation.value, Daily_wage: Daily_wage.value, password: password.value })
@@ -175,7 +175,7 @@ function Staff() {
 
     function DeleteEmployee() {
         const employee_id = document.querySelector('.delete-employee-inputs input:nth-child(2)');
-        fetch('https://supermarket-backend-f5yc.onrender.com/staff/deleteemployee', {
+        fetch(import.meta.env.VITE_BACKEND_URL + '/staff/deleteemployee', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ employee_id: employee_id.value })

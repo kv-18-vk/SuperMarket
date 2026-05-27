@@ -7,7 +7,7 @@ import usericon from './assets/user.png';
 import bg from "./assets/PROFITS.png";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
-const socket = io("https://supermarket-backend-f5yc.onrender.com");
+const socket = io(import.meta.env.VITE_BACKEND_URL);
 const Report = () => {
   const navigate = useNavigate();
   const {logout,userName,designation} = useAuth();
@@ -41,7 +41,7 @@ const Report = () => {
   };
 
   const fetchMonthlyData = (year) => {
-    fetch('https://supermarket-backend-f5yc.onrender.com/report/monthly-stats', {
+    fetch(import.meta.env.VITE_BACKEND_URL + '/report/monthly-stats', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ year })
@@ -57,7 +57,7 @@ const Report = () => {
   };
   const fetchData = (f = from, t = to) => {
 
-    fetch('https://supermarket-backend-f5yc.onrender.com/api/profits/byDateRange', {
+    fetch(import.meta.env.VITE_BACKEND_URL + '/api/profits/byDateRange', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ from: f, to: t })
@@ -81,7 +81,7 @@ const Report = () => {
     })
     .catch(err => console.error("Error fetching date data:", err));
 
-    fetch('https://supermarket-backend-f5yc.onrender.com/api/profits/summary', {
+    fetch(import.meta.env.VITE_BACKEND_URL + '/api/profits/summary', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ from: f, to: t })
@@ -95,7 +95,7 @@ const Report = () => {
       setSummary(data);})
     .catch(err => console.error("Error fetching summary data:", err));
 
-    fetch('https://supermarket-backend-f5yc.onrender.com/api/profits/byCategory', {
+    fetch(import.meta.env.VITE_BACKEND_URL + '/api/profits/byCategory', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ from: f, to: t })
@@ -115,7 +115,7 @@ const Report = () => {
     })
     .catch(err => console.error("Error fetching category data:", err));
 
-    fetch('https://supermarket-backend-f5yc.onrender.com/api/loss/summary', {
+    fetch(import.meta.env.VITE_BACKEND_URL + '/api/loss/summary', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ from: f, to: t })
@@ -129,7 +129,7 @@ const Report = () => {
       setLossSummary(data);})
     .catch(err => console.error("Error fetching summary data:", err));
 
-    fetch('https://supermarket-backend-f5yc.onrender.com/api/loss/byCategory', {
+    fetch(import.meta.env.VITE_BACKEND_URL + '/api/loss/byCategory', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ from: f, to: t })
@@ -149,7 +149,7 @@ const Report = () => {
     })
     .catch(err => console.error("Error fetching category data:", err));
 
-    fetch('https://supermarket-backend-f5yc.onrender.com/api/profits/byProduct', {
+    fetch(import.meta.env.VITE_BACKEND_URL + '/api/profits/byProduct', {
         method: "POST",
         headers: { "Content-Type": "application/json" },    
         body: JSON.stringify({ from: f, to: t })
@@ -163,7 +163,7 @@ const Report = () => {
       setProductData(data);})
     .catch(err => console.error("Error fetching product data:", err));
 
-    fetch('https://supermarket-backend-f5yc.onrender.com/api/loss/byProduct', {
+    fetch(import.meta.env.VITE_BACKEND_URL + '/api/loss/byProduct', {
         method: "POST",
         headers: { "Content-Type": "application/json" },    
         body: JSON.stringify({ from: f, to: t })
@@ -180,7 +180,7 @@ const Report = () => {
   };
 
   function load_data(){
-    fetch('https://supermarket-backend-f5yc.onrender.com/report/yearly-stats', {
+    fetch(import.meta.env.VITE_BACKEND_URL + '/report/yearly-stats', {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })

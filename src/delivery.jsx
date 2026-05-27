@@ -21,7 +21,7 @@ function Delivery() {
 
     useEffect(()=>{
         if(activeTab == "deliveries"){
-            fetch('https://supermarket-backend-f5yc.onrender.com/deliveries')
+            fetch(import.meta.env.VITE_BACKEND_URL + '/deliveries')
                 .then(res=>res.json()
                 )
                 .then(data=>{
@@ -38,7 +38,7 @@ function Delivery() {
                 });
         }
         else if(activeTab == "suppliers"){
-            fetch('https://supermarket-backend-f5yc.onrender.com/suppliers')
+            fetch(import.meta.env.VITE_BACKEND_URL + '/suppliers')
                 .then(res=>res.json()
                 )
                 .then(data=>{
@@ -69,7 +69,7 @@ function Delivery() {
     const openSupplierDeliveryModal = (supplier) => {
         setSelectedSupplier(supplier);
         
-        fetch('https://supermarket-backend-f5yc.onrender.com/deliveries')
+        fetch(import.meta.env.VITE_BACKEND_URL + '/deliveries')
           .then(res =>  res.json())
           .then(data => {
             const filteredDeliveries = data.filter(d => d.supplier_id === supplier.supplier_id);
@@ -95,7 +95,7 @@ function Delivery() {
             const Cat = document.getElementsByName("supplierCategory")[0].value.trim();
             const Cont = document.getElementsByName("supplierContact")[0].value.trim();
 
-            fetch('https://supermarket-backend-f5yc.onrender.com/suppliers/Add',{
+            fetch(import.meta.env.VITE_BACKEND_URL + '/suppliers/Add',{
                 method: 'Post',
                 headers:{"Content-Type":"application/json"},
                 body: JSON.stringify({id:id,name:Name,cat:Cat,cont:Cont})
@@ -117,7 +117,7 @@ function Delivery() {
             const expInput = document.getElementsByName("deliveryExpiry")[0].value.trim();
             const exp = expInput === "" ? null : expInput;
 
-            fetch('https://supermarket-backend-f5yc.onrender.com/deliveries/Add',{
+            fetch(import.meta.env.VITE_BACKEND_URL + '/deliveries/Add',{
                 method: 'Post',
                 headers:{"Content-Type":"application/json"},
                 body: JSON.stringify({supp:supplier,emp:userid,name:productName,quantity:quantity,cp:cp,expenses:expenses,sp:sp,exp:exp})

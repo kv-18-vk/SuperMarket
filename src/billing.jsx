@@ -25,7 +25,7 @@ function Billing() {
             return;
         }
 
-        fetch('https://supermarket-backend-f5yc.onrender.com/makebill', {
+        fetch(import.meta.env.VITE_BACKEND_URL + '/makebill', {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({items: billItems})
@@ -69,7 +69,7 @@ function Billing() {
     }
 
     function savebill(){
-        fetch('https://supermarket-backend-f5yc.onrender.com/payment', {
+        fetch(import.meta.env.VITE_BACKEND_URL + '/payment', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({items: billeditems})

@@ -3,7 +3,7 @@
 A full-featured **Supermarket Management System** built with **React** and **Vite**, designed to streamline day-to-day supermarket operations including billing, inventory tracking, delivery management, employee administration, and profit analytics.
 
 > **Live Frontend:** Deployed via the `dist/` build  
-> **Backend API:** Hosted on [Render](https://supermarket-backend-f5yc.onrender.com)
+> **Backend API:** Configured via environment variables (see [Getting Started](#-getting-started))
 
 ---
 
@@ -143,12 +143,19 @@ SuperMarket/
    npm install
    ```
 
-3. **Start the development server**
+3. **Configure environment variables**  
+   Create a `.env` file in the project root (refer to `.env.example`):
+   ```env
+   VITE_BACKEND_URL=http://localhost:5000
+   ```
+   Replace the URL with your deployed backend URL if applicable.
+
+4. **Start the development server**
    ```bash
    npm run dev
    ```
 
-4. **Open in browser**  
+5. **Open in browser**  
    Navigate to the URL shown in the terminal (typically `http://localhost:5173`)
 
 ### Build for Production
@@ -172,7 +179,7 @@ The backend handles:
 - **Database** — Data persistence and query execution
 - **Authentication** — Employee credential verification
 
-> The frontend connects to the backend at: `https://supermarket-backend-f5yc.onrender.com`
+> The frontend connects to the backend via the `VITE_BACKEND_URL` environment variable configured in your `.env` file.
 
 ---
 

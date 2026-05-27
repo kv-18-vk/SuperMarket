@@ -20,7 +20,7 @@ function Login() {
             alert("Please fill all the fields");
             return;
         }
-        fetch('https://supermarket-backend-f5yc.onrender.com/login',{
+        fetch(import.meta.env.VITE_BACKEND_URL + '/login',{
             method:'POST',
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({employee_id:employee_id,password:employee_password})
