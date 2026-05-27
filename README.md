@@ -2,7 +2,8 @@
 
 A full-featured **Supermarket Management System** built with **React** and **Vite**, designed to streamline day-to-day supermarket operations including billing, inventory tracking, delivery management, employee administration, and profit analytics.
 
-> **Live Frontend:** Demo with username = 100 and password = 100 [DataMart](https://datamart-supermarket.netlify.app/) 
+> **Live Frontend:** Demo with username = 100 and password = 100 [DataMart](https://datamart-supermarket.netlify.app/)
+
 > **Backend API:** Configured via environment variables (see [Getting Started](#-getting-started))
 
 ---
