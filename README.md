@@ -195,9 +195,9 @@ The backend handles:
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshots & Database Information
 
-> *Screenshots can be added here to showcase the UI.*
+> For detailed screenshots of the application, as well as the **ER model**, **ER diagram**, and comprehensive information about the database schema and architecture, please refer to the **[Report.pdf](./Report.pdf)** included in this repository.
 
 ---
 
